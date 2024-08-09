@@ -32,6 +32,12 @@ RUN set -ex \
        vim-enhanced \
        http-parser-devel \
        json-c-devel \
+       pmix-devel \
+       hwloc-devel \
+       lua-devel \
+       numactl-devel \
+       libbpf-devel \
+       dbus-devel \
     && yum clean all \
     && rm -rf /var/cache/yum
 
@@ -57,7 +63,7 @@ RUN set -x \
     && git clone -b ${SLURM_TAG} --single-branch --depth=1 https://github.com/SchedMD/slurm.git \
     && pushd slurm \
     && ./configure --enable-debug --prefix=/usr --sysconfdir=/etc/slurm \
-        --with-mysql_config=/usr/bin  --libdir=/usr/lib64 \
+        --with-mysql_config=/usr/bin  --libdir=/usr/lib64 --with-pmix \
     && make install \
     && install -D -m644 etc/cgroup.conf.example /etc/slurm/cgroup.conf.example \
     && install -D -m644 etc/slurm.conf.example /etc/slurm/slurm.conf.example \
