@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+chown -f slurm:slurm /etc/slurm/slurmdbd.conf
+chmod -f 600 /etc/slurm/slurmdbd.conf
+
 if [ "$1" = "slurmdbd" ]
 then
     echo "---> Starting the MUNGE Authentication service (munged) ..."

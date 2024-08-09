@@ -22,6 +22,9 @@ services:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
       - var_log_slurm:/var/log/slurm
+      - ./slurmdbd.conf:/etc/slurm/slurmdbd.conf
+      - ./slurm.conf:/etc/slurm/slurm.conf
+      - ./cgroup.conf:/etc/slurm/cgroup.conf
     expose:
       - "6819"
     depends_on:
@@ -37,6 +40,9 @@ services:
       - etc_slurm:/etc/slurm
       - slurm_jobdir:/data
       - var_log_slurm:/var/log/slurm
+      - ./slurmdbd.conf:/etc/slurm/slurmdbd.conf
+      - ./slurm.conf:/etc/slurm/slurm.conf
+      - ./cgroup.conf:/etc/slurm/cgroup.conf
     expose:
       - "6817"
     depends_on:
@@ -52,6 +58,9 @@ services:
       - etc_slurm:/etc/slurm
       - slurm_jobdir:/data
       - var_log_slurm:/var/log/slurm
+      - ./slurmdbd.conf:/etc/slurm/slurmdbd.conf
+      - ./slurm.conf:/etc/slurm/slurm.conf
+      - ./cgroup.conf:/etc/slurm/cgroup.conf
     expose:
       - "6818"
     depends_on:
@@ -67,6 +76,9 @@ services:
       - etc_slurm:/etc/slurm
       - slurm_jobdir:/data
       - var_log_slurm:/var/log/slurm
+      - ./slurmdbd.conf:/etc/slurm/slurmdbd.conf
+      - ./slurm.conf:/etc/slurm/slurm.conf
+      - ./cgroup.conf:/etc/slurm/cgroup.conf
     expose:
       - "6818"
     depends_on:
