@@ -1,4 +1,4 @@
-FROM rockylinux:8
+FROM rockylinux:9
 
 LABEL org.opencontainers.image.source="https://github.com/giovtorres/slurm-docker-cluster" \
       org.opencontainers.image.title="slurm-docker-cluster" \
@@ -7,14 +7,19 @@ LABEL org.opencontainers.image.source="https://github.com/giovtorres/slurm-docke
       maintainer="Giovanni Torres"
 
 RUN set -ex \
-    && yum makecache \
-    && yum -y update \
-    && yum -y install dnf-plugins-core \
-    && yum config-manager --set-enabled powertools \
-    && yum -y install \
+    && dnf makecache \
+    && dnf -y update \
+    && dnf -y install dnf-plugins-core \
+    && dnf config-manager --enable crb \
+    && dnf -y install \
+       nano \
        wget \
        bzip2 \
+    && dnf clean all \
+    && dnf -y install \
        perl \
+    && dnf clean all \
+    && dnf -y install \
        gcc \
        gcc-c++\
        git \
@@ -38,12 +43,10 @@ RUN set -ex \
        numactl-devel \
        libbpf-devel \
        dbus-devel \
-    && yum clean all \
-    && rm -rf /var/cache/yum
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
 
-RUN alternatives --set python /usr/bin/python3
-
-RUN pip3 install Cython nose
+RUN pip3 install Cython nose packaging
 
 ARG GOSU_VERSION=1.11
 
@@ -91,6 +94,8 @@ RUN set -x \
         /var/lib/slurmd/fed_mgr_state \
     && chown -R slurm:slurm /var/*/slurm* \
     && /sbin/create-munge-key
+
+RUN pip3 install git+https://github.com/PySlurm/pyslurm.git
 
 COPY slurm.conf /etc/slurm/slurm.conf
 COPY slurmdbd.conf /etc/slurm/slurmdbd.conf
